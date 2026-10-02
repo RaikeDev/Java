@@ -17,7 +17,7 @@
  */
 public class DynamicArray {
     int[] array;
-
+    int size;
 
     /**
      * Возвращает сумму всех элементов массива {@link #array}.
