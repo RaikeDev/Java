@@ -1,9 +1,17 @@
 import java.lang.reflect.Array;
+import java.util.ArrayDeque;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args){
-
+//        Stack st = new Stack();
+//        ArrayList lst;
+//        ArrayDeque deq;
     }
+    /*
+    стек push()pop()peek()
+    динамический массив add()remove()get()set()
+     */
 
     /**
      * 1) техническая сторона

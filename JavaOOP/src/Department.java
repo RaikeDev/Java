@@ -1,14 +1,30 @@
-public class Department {
-    private String departmentName;
-    private Employee boss;
-    private Employee[] employees;
+import java.util.ArrayList;
 
-    public Department(String departmentName){
-        this.departmentName = departmentName;
+public class Department {
+    private String title;
+    private Employee boss;
+    private final ArrayList<Employee> employees;
+
+    public Department(String title) {
+        employees = new ArrayList<>();
+        if (this.title == null){
+            this.title = "";
+        } else{
+            this.title = title;
+        }
+        this.boss = null;
+    }
+    public Department(String title, Employee boss){
+        employees = new ArrayList<>();
+        this.title = title;
+        this.boss = boss;
+    }
+    public String getTitle() {
+        return title;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Employee getBoss() {
@@ -16,24 +32,35 @@ public class Department {
     }
 
     public void setBoss(Employee boss) {
+        if (this.boss == boss) return;
         this.boss = boss;
+        this.employees.add(boss);
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
-    }
-
-    public Employee[] getEmployees() {
+    public ArrayList<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(Employee[] employees) {
-        this.employees = employees;
+    public void addEmployee(Employee employee) {
+        if (employee == null || employees.contains(employee)) return;
+        if (employee.getDepartment() != this) {
+            employee.getDepartment().removeEmployee(employee);
+            employee.setDepartment(this);
+        }
     }
 
+    public void removeEmployee(Employee employee){
+        if (employee==null || !employees.contains(employee)){
+            return;
+        } else{
+            if (employee.getDepartment().getBoss() == employee) employee.getDepartment().setBoss(null);
+            employees.remove(employee);
+            employee.setDepartment(null);
+        }
+    }
 
     @Override
     public String toString(){
-        return "department name: " + departmentName + ", boss: " + boss;
+        return "department name: " + title + ", boss: " + (boss == null ? "нет" : boss.getName());
     }
 }

@@ -4,47 +4,61 @@ import java.util.List;
 
 public class Main {
     static void main(){
-        List<Integer> lst = new ArrayList<>();
-        lst.toArray();
-
-
-        Student st = new Student("vasia");
-        st.addGrade(99);
-        System.out.println(st);
+        Student s1 = new Student("vasya", null);
+        Student s2 = new Student("petya", Rule.ofRange(2,5), List.of());
+        s1.addGrade(888);
+        Rule.EMPTY.checkWithCode(7);
     }
+//        List<Integer> lst = new ArrayList<>();
+////        lst.toArray();
+//
+//
+//        Student st = new Student("vasia");
+//        st.addGrade(99);
+//        System.out.println(st);
+//    }
+}
+
+interface Addable{
+    void addFirst(int x);
 }
 
 class Student{
     private String name;
     private List<Integer> grades = new ArrayList<>();
+    private Rule rule;
 
     /**
+     * полиморфизм - написани кода через использование механизма где ссылка определяет ЧТО ДОСТУПНО
+     * а объект определяет как работает
+     *
      * инкапсуляция - обеспечение безопасности работы с объектом
      * инкапсуляция состояния
      * инкапсуляция поведения - у объекта должен быть интерфейс взаимодействия с ним;
      * можно добавлять новое,
      * но менять старое только так чтобы оно не ломало ранее работавшее
+     *
      * интерфейс объекта - это список его публичных методов
      */
     public Student(String name){
-        this(name, new ArrayList<>());
+        this(name, Rule.EMPTY, List.of());
+    }
+    public Student(String name, Rule rule){
+        this(name, rule, List.of());
     }
 
-    public Student(String name, List<Integer> grades){
+    public Student(String name, Rule rule, List<Integer> grades){
         if (name == null || name.isBlank()){
             throw new IllegalArgumentException("name must be not empty");
         }
         this.name = name;
-        for (int x:grades){
-            if (x<2 || x>5){
-                throw new IllegalArgumentException();
-            }
-        }
+        this.rule = rule == null ? Rule.EMPTY : rule;
+        if (grades == null) throw new IllegalArgumentException("grades must be not null");
         this.grades = new ArrayList<>(grades);
     }
 
     public void setName(String name) {
-        if (name.isBlank() || name == null){
+        if (name == null || name.isBlank()){
             throw new IllegalArgumentException("name must be not empty");
         }
         this.name = name;
@@ -57,9 +71,8 @@ class Student{
 
 
     public void addGrade(int x){
-        if (x >= 2 && x <= 5){
-            grades.add(x);
-        }
+        if (!rule.check(x)) throw new IllegalArgumentException("grade " + x + " is not allowed");
+        grades.add(x);
     }
 
     /**

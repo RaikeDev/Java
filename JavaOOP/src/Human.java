@@ -1,15 +1,18 @@
 public class Human {
     private FullName name;
     private int height;
-    private Human father;
+    private final Human father;
 
+    public Human(Human human){
+        if (human.getName() == null) throw new IllegalArgumentException("Имя не указано");
+        this.name = human.name;
 
+        this.height = human.height;
+        this.father = human.father;
+    }
     public Human(FullName name, int height, Human father) {
+        if (name == null) throw new IllegalArgumentException("Имя не указано");
         this.name = name;
-
-        if (name.getPatronymic() == null && father != null){
-            name.setPatronymic(father.getName().getFirstName() + "ович");
-        }
 
         this.height = height;
         this.father = father;
@@ -28,7 +31,7 @@ public class Human {
     }
 
     public FullName getName() {
-        return name;
+        return new FullName(name);
     }
 
     public void setName(FullName name) {
@@ -60,11 +63,7 @@ public class Human {
     }
 
     public Human getFather() {
-        return father;
-    }
-
-    public void setFather(Human father) {
-        this.father = father;
+        return new Human(father);
     }
 
     private static String join(String base, String part) {

@@ -1,12 +1,16 @@
 public class FullName {
-    private String secName;
-    private String firstName;
-    private String patronymic;
+    private final String secName;
+    private final String firstName;
+    private final String patronymic;
 
     public FullName(String firstName, String secName, String patronymic) {
         this.firstName = firstName;
         this.secName = secName;
         this.patronymic = patronymic;
+
+        if (this.firstName == null && this.secName == null && this.patronymic == null) {
+            throw new IllegalArgumentException("Хотя бы один параметр должен быть задан");
+        }
     }
 
     public FullName(String firstName, String secName) {
@@ -17,28 +21,26 @@ public class FullName {
         this(firstName, null, null);
     }
 
+    public FullName(FullName name) {
+        if (name.firstName == null && name.secName == null && name.patronymic == null) {
+            throw new IllegalArgumentException("Хотя бы один параметр должен быть задан");
+        }
+        this.firstName = name.firstName;
+        this.secName = name.secName;
+        this.patronymic = name.patronymic;
+    }
+
     public String getSecName() {
         return secName;
     }
 
-    public void setSecName(String secName) {
-        this.secName = secName;
-    }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getPatronymic() {
         return patronymic;
-    }
-
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
     }
 
     @Override
