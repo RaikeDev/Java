@@ -35,6 +35,16 @@ public class Main {
 //        MainTest.task2_2_4();
 //        MainTest.task2_2_5();
 //        MainTest.task2_3_1();
-        MainTest.practice();
+//        MainTest.practice();
+//        MainTest.task2_3_2();
+//        MainTest.task2_3_3();
+//        MainTest.task2_3_4();
+//        MainTest.task2_3_5();
+//        MainTest.task2_3_6();
+//        MainTest.task2_3_7();
+//        MainTest.task2_3_8();
+//        MainTest.task2_3_9();
+
+        MainTest.task3_1_1();
     }
 }

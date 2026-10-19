@@ -1,18 +1,34 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Student {
     private String name;
-    private ArrayList<Integer> grades;
+    private final ArrayList<Integer> grades;
+    private final Checker checker;
 
-    public Student(String name, ArrayList<Integer> grades){
-        if (grades == null) this.grades = new ArrayList<>();
-        else this.grades = new ArrayList<>(grades);
-        this.name = name;
-
+    public Student(String name, ArrayList<Integer> grades, Checker checker) {
+        setName(name);
+        this.checker = checker == null ? new CheckAlwaysTrue() : checker;
+        this.grades = new ArrayList<>();
+        if (grades != null) {
+            for (Integer grade : grades) {
+                if (grade == null || !this.checker.check(grade)) {
+                    throw new IllegalArgumentException("некорректная оценка: " + grade);
+                }
+                this.grades.add(grade);
+            }
+        }
     }
-    public Student(String name){
-        this(name, new ArrayList<>());
+
+    public Student(String name, ArrayList<Integer> grades) {
+        this(name, grades, null);
+    }
+
+    public Student(String name, Checker checker) {
+        this(name, null, checker);
+    }
+
+    public Student(String name) {
+        this(name, null, null);
     }
 
     public String getName() {
@@ -21,61 +37,40 @@ public class Student {
 
     public void setName(String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("имя не передано");
         }
         this.name = name;
     }
 
     public ArrayList<Integer> getGrades() {
-        return grades;
+        return new ArrayList<>(grades);
     }
 
-    public void setGrades(ArrayList<Integer> grades) {
-
-        this.grades = new ArrayList<>(grades);
-    }
-
-    public double getAvgGrade(){
+    public double getAvgGrade() {
         if (grades.isEmpty()) {
             return 0;
         }
         double sum = 0;
-        for (int g:grades){
-            sum += g;
+        for (int grade : grades) {
+            sum += grade;
         }
-        return sum == 0 ? 0 : sum / this.grades.size();
+        return sum / grades.size();
     }
-    public boolean isExcellent(){
-        if (grades.isEmpty()) return false;
-        for (int grade:grades){
-            if (grade != 5) return false;
+
+    public boolean isExcellent() {
+        if (grades.isEmpty()) {
+            return false;
+        }
+        for (int grade : grades) {
+            if (grade != 5) {
+                return false;
+            }
         }
         return true;
     }
-    private void validate(ArrayList<Integer> grades) {
-        if (grades == null) {
-             this.grades = new ArrayList<>();
-        }
-        for (Integer grade : grades) {
-            if (grade < 2 || grade > 5) {
-                throw new IllegalArgumentException("Оценка вне диапазона " + grade);
-            }
-        }
-    }
 
     @Override
-    public String toString(){
-        if (grades == null || grades.isEmpty()){
-            return "grades: []";
-        }
-        String result = name + ": " + "[";
-        for (int i=0; i<grades.size(); i++){
-            if(i>0){
-                result += ", ";
-            }
-            result += grades.get(i);
-        }
-        return result +  "]";
-
+    public String toString() {
+        return name + ": " + grades;
     }
 }
