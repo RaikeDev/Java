@@ -1,21 +1,23 @@
-public class Cat {
+public class Cat implements Meowable {
     private String name;
 
-    public Cat(String name){
+    public Cat(String name) {
         this.name = name;
     }
 
-    public String meow(){
-        return name + ": мяу!";
+    public void meow() {
+        System.out.println(name + ": мяу!");
     }
-    public String meow(int count){
+
+    public void meow(int count) {
         String result = name + ": ";
-        for(int i=0; i<count; i++){
+        for (int i = 0; i < count; i++) {
             if (i == 0) result += "мяу";
             else result += "-мяу";
         }
         result += "!";
-        return result;
+
+        System.out.println(result);
     }
 
     public String getName() {
@@ -27,7 +29,7 @@ public class Cat {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "кот: " + name;
     }
 }

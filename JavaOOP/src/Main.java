@@ -36,8 +36,5 @@ public class Main {
 //        MainTest.task2_2_5();
 //        MainTest.task2_3_1();
         MainTest.practice();
-        MainTest.task2_3_5();
-        MainTest.task2_3_6();
-        MainTest.task2_3_7();
     }
 }
