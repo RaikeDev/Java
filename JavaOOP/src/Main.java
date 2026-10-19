@@ -1,5 +1,5 @@
 public class Main {
-    public static void main(String[]args){
+    public static void main(String[] args) {
 //        MainTest.task1_4_1();
 //        MainTest.task1_4_2();
 //        MainTest.task1_4_3();
@@ -36,5 +36,8 @@ public class Main {
 //        MainTest.task2_2_5();
 //        MainTest.task2_3_1();
         MainTest.practice();
+        MainTest.task2_3_5();
+        MainTest.task2_3_6();
+        MainTest.task2_3_7();
     }
 }

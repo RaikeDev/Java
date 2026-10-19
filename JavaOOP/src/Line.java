@@ -1,7 +1,7 @@
 import static java.lang.Math.sqrt;
 
 
-public class Line {
+public class Line implements Lengthable {
     private final static Point2D DEFAULT_POINT_2_D = new Point2D(0, 0);
     private Point2D start;
     private Point2D end;

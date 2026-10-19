@@ -4,24 +4,26 @@ import java.util.List;
 
 import static java.lang.Math.sqrt;
 
-public class PolygonalLine {
+public class Polyline implements Lengthable, Polyable {
     private final List<Point2D> point2DS;
 
-    public PolygonalLine(Point2D... newPoint2DS) {
+    public Polyline(Point2D... newPoint2DS) {
         checkPoints(Arrays.stream(newPoint2DS).toList());
         this.point2DS = new ArrayList<>(List.of(newPoint2DS));
     }
-    public PolygonalLine(ArrayList<Point2D> point2Ds){
+
+    public Polyline(ArrayList<Point2D> point2Ds) {
         checkPoints(point2Ds);
         point2DS = new ArrayList<Point2D>(point2Ds);
     }
-    public PolygonalLine(PolygonalLine polygonalLine){
-        checkPoints(polygonalLine.getPoints());
+
+    public Polyline(Polyline polyline) {
+        checkPoints(polyline.getPoints());
 //        if (polygonalLine == null) point2DS = new ArrayList<>();
-        point2DS = polygonalLine.getPoints();
+        point2DS = polyline.getPoints();
     }
 
-    public List<Point2D> getPoints() {
+    public ArrayList<Point2D> getPoints() {
         return new ArrayList<>(point2DS);
     }
 
@@ -40,10 +42,10 @@ public class PolygonalLine {
         point2DS.addAll(Arrays.asList(newPoint2DS));
     }
 
-    public double length(){
-        double res=0;
-        for (int i = 0; i < point2DS.size() - 1; i++){
-            res += sqrt((this.point2DS.get(i+1).getX() - this.point2DS.get(i).getX())*(this.point2DS.get(i+1).getX() - this.point2DS.get(i).getX()) + (this.point2DS.get(i+1).getY() - this.point2DS.get(i).getY())*(this.point2DS.get(i+1).getY() - this.point2DS.get(i).getY()));
+    public double length() {
+        double res = 0;
+        for (int i = 0; i < point2DS.size() - 1; i++) {
+            res += sqrt((this.point2DS.get(i + 1).getX() - this.point2DS.get(i).getX()) * (this.point2DS.get(i + 1).getX() - this.point2DS.get(i).getX()) + (this.point2DS.get(i + 1).getY() - this.point2DS.get(i).getY()) * (this.point2DS.get(i + 1).getY() - this.point2DS.get(i).getY()));
         }
         return res;
     }
@@ -60,13 +62,17 @@ public class PolygonalLine {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "Ломаная линия: [";
-        for (int i = 0; i< point2DS.size(); i++){
+        for (int i = 0; i < point2DS.size(); i++) {
             result += point2DS.get(i);
-            if (i < point2DS.size()-1) result += ", ";
+            if (i < point2DS.size() - 1) result += ", ";
         }
         result += "]";
         return result;
+    }
+
+    public Polyline getPolyline() {
+        return new Polyline(getPoints());
     }
 }

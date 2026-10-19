@@ -1,8 +1,8 @@
 import java.util.Arrays;
 import java.util.List;
 
-public class ClosedLine extends PolygonalLine {
-    public ClosedLine(Point2D... point2DS){
+public class PolygonalChain extends Polyline {
+    public PolygonalChain(Point2D... point2DS){
         super(point2DS);
         closeLine();
     }
@@ -37,5 +37,16 @@ public class ClosedLine extends PolygonalLine {
 
     private static boolean isClosed(List<Point2D> point2DS) {
         return point2DS.size() > 1 && point2DS.getFirst() == point2DS.getLast();
+    }
+
+    @Override
+    public String toString(){
+        String result = "Замкнутая ломаная линия: [";
+        for (int i = 0; i < super.getPoints().size(); i++){
+            result += super.getPoints().get(i);
+            if (i < super.getPoints().size()-1) result += ", ";
+        }
+        result += "]";
+        return result;
     }
 }
