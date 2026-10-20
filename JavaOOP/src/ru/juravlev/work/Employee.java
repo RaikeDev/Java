@@ -1,8 +1,10 @@
 package ru.juravlev.work;
 
+import java.util.Objects;
+
 public class Employee {
-    private String name;
-    private Department department;
+    private final String name;
+    Department department;
 
     public Employee(String name) {
         this(name, null);
@@ -18,13 +20,9 @@ public class Employee {
         }
     }
 
+
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        if (name == null) this.name = "unknown";
-        else this.name = name;
     }
 
     public Department getDepartment() {
@@ -33,18 +31,26 @@ public class Employee {
 
     public void setDepartment(Department department) {
         if (this.department == department) return;
+
         if (this.department != null) {
-            this.department.removeEmployee(this);
-            if (this.department.getBoss() == this) {
-                this.department.setBoss(null);
-            }
+            if (isHead()) this.department.head = null;
+            this.department.employees.remove(this);
         }
-        if (department == null) {
-            this.department = null;
-            return;
+        if (department != null) {
+            department.employees.add(this);
         }
+        this.department = department;
     }
 
+    public boolean isHead() {
+        return this == this.department.head;
+    }
+
+    @Override
+    public boolean equals(Employee e) {
+        if (e == null) return false;
+        if ((Objects.equals(e.name, name)) && (e.department == department)) return true;
+    }
 
     @Override
     public String toString() {

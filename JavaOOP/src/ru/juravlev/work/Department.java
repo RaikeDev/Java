@@ -1,70 +1,74 @@
 package ru.juravlev.work;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Department {
-    private String title;
-    private Employee boss;
-    private final ArrayList<Employee> employees;
+    private final String name;
+    Employee head;
+    ArrayList<Employee> employees;
 
-    public Department(String title) {
+    public Department(String name) {
         employees = new ArrayList<>();
-        if (this.title == null) {
-            this.title = "";
+        if (name == null) {
+            this.name = "";
         } else {
-            this.title = title;
+            this.name = name;
         }
-        this.boss = null;
+        this.head = null;
     }
 
-    public Department(String title, Employee boss) {
-        employees = new ArrayList<>();
-        this.title = title;
-        this.boss = boss;
+    public Department(String name, Employee head) {
+        this(name);
+        setBoss(head);
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees.forEach(e -> e.setDepartment(null));
+        if (employees == null) return;
+        employees.forEach(this::addEmployee);
+    }
+
+    public void addEmployee(Employee employee) {
+        if (employee == null || employees.contains(employee)) {
+            return;
+        }
+        employee.setDepartment(this);
     }
 
     public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+        return name;
     }
 
     public Employee getBoss() {
-        return boss;
+        return head;
     }
 
-    public void setBoss(Employee boss) {
-        if (this.boss == boss) return;
-        this.boss = boss;
-        this.employees.add(boss);
+    public void setBoss(Employee head) {
+        if (head != null) head.setDepartment(this);
+        this.head = head;
     }
 
     public ArrayList<Employee> getEmployees() {
         return employees;
     }
 
-    public void addEmployee(Employee employee) {
-        if (employee == null || employees.contains(employee)) return;
-        if (employee.getDepartment() != this) {
-            employee.getDepartment().removeEmployee(employee);
-            employee.setDepartment(this);
+    public void removeEmployee(Employee employee) {
+        if (employee != null && employee.department == this) {
+            employee.setDepartment(null);
         }
     }
 
-    public void removeEmployee(Employee employee) {
-        if (employee == null || !employees.contains(employee)) {
-            return;
-        } else {
-            if (employee.getDepartment().getBoss() == employee) employee.getDepartment().setBoss(null);
-            employees.remove(employee);
-            employee.setDepartment(null);
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()){
+
         }
     }
 
     @Override
     public String toString() {
-        return "department name: " + title + ", boss: " + (boss == null ? "нет" : boss.getName());
+        return "department name: " + name + ", head: " + (head == null ? "нет" : head.getName());
     }
 }
