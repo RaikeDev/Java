@@ -1,7 +1,7 @@
 package ru.juravlev.weapon;
 
 public abstract class Weapon {
-    private int ammo;
+    protected int ammo;
 
     public Weapon(int ammo) {
         if (ammo < 0) throw new RuntimeException();
@@ -25,5 +25,11 @@ public abstract class Weapon {
         int tmp = this.ammo;
         this.ammo = ammo;
         return tmp;
+    }
+
+    public int unload(){
+        int bullets = ammo;
+        ammo = 0;
+        return bullets;
     }
 }

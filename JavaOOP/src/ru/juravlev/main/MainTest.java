@@ -2,10 +2,7 @@ package ru.juravlev.main;
 
 import ru.juravlev.animal.*;
 import ru.juravlev.geometry.*;
-import ru.juravlev.math.Calculator;
-import ru.juravlev.math.DoubleValue;
-import ru.juravlev.math.Fraction;
-import ru.juravlev.math.IntegerValue;
+import ru.juravlev.math.*;
 import ru.juravlev.people.*;
 import ru.juravlev.weapon.AssaultRifle;
 import ru.juravlev.weapon.Gun;
@@ -15,6 +12,7 @@ import ru.juravlev.city.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigInteger;
 
 public class MainTest {
     public static void task1_4_1() {
@@ -388,5 +386,24 @@ public class MainTest {
         Student petya = new Student("petya", new ArrayList<>(List.of(0, 8, 2)), new CheckEven());
         System.out.println(vasya);
         System.out.println(petya);
+    }
+
+    public static void task3_1_3() {
+        System.out.println(Calculator.sum(new IntegerValue(7), new Fraction(11, 3), new DoubleValue(3.21), new BigIntegerValue(new BigInteger("12345678912345678912"))));
+    }
+
+    public static void task3_1_4() {
+        System.out.println(Pow.toPow("4", "3"));
+    }
+
+    public static void task3_1_5() {
+        ru.juravlev.geometry.Point2D point1 = new Point2D(1, 2);
+        java.awt.Point point2 = new java.awt.Point(4, 3);
+        System.out.println(point1);
+        System.out.println(point2);
+    }
+
+    public static void task3_2_1() {
+
     }
 }

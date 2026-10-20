@@ -34,10 +34,6 @@ public class Gun extends Weapon {
         return bullets - loaded;
     }
 
-    public int discharge() {
-        return load(0);
-    }
-
     public boolean isCharge() {
         return ammo() > 0;
     }
