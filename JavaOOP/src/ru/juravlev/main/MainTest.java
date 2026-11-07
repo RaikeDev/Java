@@ -406,4 +406,42 @@ public class MainTest {
     public static void task3_2_1() {
 
     }
+
+    public static void test1(Student s, int... values) {
+        ArrayList<Integer> copy = (ArrayList<Integer>) s.getGrades();
+        for (int v : values) {
+            try {
+                s.addGrade(v);
+            } catch (IllegalGradeException e) {
+                s.setGrades(copy);
+                return;
+            }
+        }
+    }
+
+    public static void test2(Student s, int... values) {
+        ArrayList<Integer> copy = (ArrayList<Integer>) s.getGrades();
+        for (int v : values) {
+            copy.add(v);
+        }
+        s.setGrades(copy);
+    }
+
+//    public static void test3(int x, Student... students) {
+//        List<List<Student>> copy = new ArrayList<>();
+//        for (Student s : students) {
+//            copy.add(s.getGrades());
+//        }
+//
+//        try {
+//            for (Student s : students) {
+//                s.addGrade(x);
+//            }
+//        } catch (IllegalGradeException e) {
+//            for (int i = 0; i < copy.size(); i++) {
+//                students[i].setGrades(copy.get(i));
+//            }
+//        }
+//
+//    }
 }

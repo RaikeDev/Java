@@ -2,6 +2,7 @@ package ru.juravlev.work;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Department {
     private final String name;
@@ -62,9 +63,10 @@ public class Department {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()){
-
-        }
+        if (o == null) return false;
+        if (o.getClass() != getClass()) return false;
+        Department dep = (Department) o;
+        return Objects.equals(dep.name, name);
     }
 
     @Override

@@ -45,4 +45,15 @@ public abstract sealed class PointAbstract permits Point2D, Point3D {
     public String toString() {
         return Arrays.toString(coords);
     }
+
+    @Override
+    public Point clone() {
+        try {
+            Point copy = (Point) super.clone();
+            copy.coords = getPoints();
+            return copy;
+        } catch (CloneNotSupportedException e) {
+
+        }
+    }
 }

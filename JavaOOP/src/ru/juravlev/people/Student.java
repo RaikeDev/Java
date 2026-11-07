@@ -1,27 +1,28 @@
 package ru.juravlev.people;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Student {
+public class Student implements Cloneable {
     private String name;
-    private final ArrayList<Integer> grades;
+    private List<Integer> grades;
     private final Checker checker;
 
-    public Student(String name, ArrayList<Integer> grades, Checker checker) {
+    public Student(String name, List<Integer> grades, Checker checker) {
         setName(name);
         this.checker = checker == null ? new CheckAlwaysTrue() : checker;
         this.grades = new ArrayList<>();
         if (grades != null) {
             for (Integer grade : grades) {
                 if (grade == null || !this.checker.check(grade)) {
-                    throw new IllegalArgumentException("некорректная оценка: " + grade);
+                    throw new IllegalGradeException();
                 }
                 this.grades.add(grade);
             }
         }
     }
 
-    public Student(String name, ArrayList<Integer> grades) {
+    public Student(String name, List<Integer> grades) {
         this(name, grades, null);
     }
 
@@ -33,18 +34,30 @@ public class Student {
         this(name, null, null);
     }
 
+    public void addGrade(int grade) {
+        if (!checker.check(grade)) throw new IllegalGradeException();
+        grades.add(grade);
+    }
+
+    public void setGrades(List<Integer> grades) {
+        for (int g : grades) {
+            if (!checker.check(g)) throw new IllegalGradeException();
+        }
+        this.grades = new ArrayList<>(grades);
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("имя не передано");
+            throw new IllegalGradeException();
         }
         this.name = name;
     }
 
-    public ArrayList<Integer> getGrades() {
+    public List<Integer> getGrades() {
         return new ArrayList<>(grades);
     }
 
@@ -69,6 +82,17 @@ public class Student {
             }
         }
         return true;
+    }
+
+    @Override
+    public Student clone() {
+        try {
+            Student s = (Student) super.clone();
+            s.setGrades(getGrades());
+            return s;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

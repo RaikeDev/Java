@@ -6,7 +6,7 @@ import java.util.List;
 
 import static java.lang.Math.sqrt;
 
-public class Polyline implements Lengthable, Polyable {
+public class Polyline implements Lengthable, Polyable, Cloneable {
     private final List<Point2D> point2DS;
 
     public Polyline(Point2D... newPoint2DS) {
@@ -76,5 +76,20 @@ public class Polyline implements Lengthable, Polyable {
 
     public Polyline getPolyline() {
         return new Polyline(getPoints());
+    }
+
+    @Override
+    public Polyline clone() {
+        try {
+            Polyline pl = new Polyline((Polyline) super.clone());
+            List<Point2D> lst = new ArrayList<>();
+            for (int i = 0; i < pl.point2DS.size(); i++) {
+                lst.add(pl.point2DS.get(i).clone());
+            }
+            pl.setPoints(lst);
+            return pl;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
