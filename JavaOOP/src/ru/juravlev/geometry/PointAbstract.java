@@ -3,7 +3,7 @@ package ru.juravlev.geometry;
 import java.util.Arrays;
 
 public abstract sealed class PointAbstract permits Point2D, Point3D {
-    private final int[] coords;
+    protected final int[] coords;
 
     PointAbstract(int... coords) {
         this.coords = coords.clone();
@@ -44,16 +44,5 @@ public abstract sealed class PointAbstract permits Point2D, Point3D {
     @Override
     public String toString() {
         return Arrays.toString(coords);
-    }
-
-    @Override
-    public Point clone() {
-        try {
-            Point copy = (Point) super.clone();
-            copy.coords = getPoints();
-            return copy;
-        } catch (CloneNotSupportedException e) {
-
-        }
     }
 }

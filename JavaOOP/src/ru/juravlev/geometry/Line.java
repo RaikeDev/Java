@@ -1,9 +1,11 @@
 package ru.juravlev.geometry;
 
+import java.util.Objects;
+
 import static java.lang.Math.sqrt;
 
 
-public class Line implements Lengthable {
+public class Line implements Lengthable, Cloneable {
     private final static Point2D DEFAULT_POINT_2_D = new Point2D(0, 0);
     private Point2D start;
     private Point2D end;
@@ -58,6 +60,34 @@ public class Line implements Lengthable {
         double kat2 = (this.getEnd().getY() - this.getStart().getY()) * (this.getEnd().getY() - this.getStart().getY());
         return (sqrt(kat1 + kat2));
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Line line = (Line) o;
+        return Objects.equals(start, line.start) && Objects.equals(end, line.end) ||
+                Objects.equals(start, line.end) && Objects.equals(end, line.start);
+    }
+
+    @Override
+    public int hashCode() {
+        return start.hashCode() + end.hashCode();
+    }
+
+    @Override
+    public Line clone(){
+        try{
+            Line line = (Line) super.clone();
+            line.start = this.start.clone();
+            line.end = this.end.clone();
+            return line;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @Override
     public String toString() {

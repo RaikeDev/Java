@@ -1,6 +1,7 @@
 package ru.juravlev.main;
 
 import ru.juravlev.animal.*;
+import ru.juravlev.exceptions.Connection;
 import ru.juravlev.geometry.*;
 import ru.juravlev.math.*;
 import ru.juravlev.people.*;
@@ -444,4 +445,41 @@ public class MainTest {
 //        }
 //
 //    }
+
+    public static void task4_2_1() {
+        Connection con = new Connection("ermakov.edu");
+        for (int i = 0; i < 10; i++) {
+            try {
+                System.out.println(con.getData());
+            } catch (Exception e) {
+                System.out.println("Exception: " + e);
+            }
+        }
+    }
+
+    public static int task4_2_2(String... str) {
+        List<Integer> array = new ArrayList<>();
+        for (String s : str) {
+            try {
+                array.add(Integer.parseInt(s));
+            } catch (NumberFormatException e) {
+                System.out.println(e);
+            }
+        }
+        if (array.isEmpty()) {
+            throw new IllegalArgumentException("Нет чисел");
+        }
+
+        int result = array.getFirst();
+
+        for (int i = 1; i < array.size(); i++) {
+            result /= array.get(i);
+        }
+
+        return result;
+    }
+
+    public static void task4_2_3(List<Student> students) {
+        students.forEach(s -> s.addGrade((int) (Math.random() * 10) + 1));
+    }
 }

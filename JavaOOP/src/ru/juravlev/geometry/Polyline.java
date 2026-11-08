@@ -3,6 +3,7 @@ package ru.juravlev.geometry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static java.lang.Math.sqrt;
 
@@ -63,6 +64,53 @@ public class Polyline implements Lengthable, Polyable, Cloneable {
         }
     }
 
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getLines());
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (o == null) return false;
+        if (!(o instanceof Polyline polyline)) return false;
+
+        List<Line> lines = getLines();
+        List<Line> linesObj = polyline.getLines();
+
+        return lines.equals(linesObj);
+    }
+
+    private List<Line> getLines() {
+        List<Line> lines = new ArrayList<>();
+
+        for (int i = 0; i < point2DS.size() - 1; i++) {
+            lines.add(new Line(
+                    point2DS.get(i),
+                    point2DS.get(i + 1)
+            ));
+        }
+
+        return lines;
+    }
+
+
+    @Override
+    public Polyline clone() {
+        try {
+            Polyline pl = (Polyline) super.clone();
+            List<Point2D> lst = new ArrayList<>();
+            for (int i = 0; i < pl.point2DS.size(); i++) {
+                lst.add(pl.point2DS.get(i).clone());
+            }
+            pl.setPoints(lst);
+            return pl;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     @Override
     public String toString() {
         String result = "Ломаная линия: [";
@@ -78,18 +126,5 @@ public class Polyline implements Lengthable, Polyable, Cloneable {
         return new Polyline(getPoints());
     }
 
-    @Override
-    public Polyline clone() {
-        try {
-            Polyline pl = new Polyline((Polyline) super.clone());
-            List<Point2D> lst = new ArrayList<>();
-            for (int i = 0; i < pl.point2DS.size(); i++) {
-                lst.add(pl.point2DS.get(i).clone());
-            }
-            pl.setPoints(lst);
-            return pl;
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 }

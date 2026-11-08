@@ -1,6 +1,7 @@
 package ru.juravlev.geometry;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLongArray;
 
 public final class Point2D extends PointAbstract implements Cloneable {
@@ -19,5 +20,18 @@ public final class Point2D extends PointAbstract implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public final int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point2D point = (Point2D) o;
+        return Arrays.equals(coords, point.coords);
     }
 }
