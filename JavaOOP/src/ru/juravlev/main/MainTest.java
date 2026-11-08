@@ -204,7 +204,7 @@ public class MainTest {
         gun.shoot();
         gun.shoot();
 
-        gun.discharge();
+        gun.unload();
         gun.shoot();
     }
 

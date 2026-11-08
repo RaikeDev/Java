@@ -46,10 +46,10 @@ public class Employee {
         return this == this.department.head;
     }
 
-    @Override
-    public boolean equals(Employee e) {
-        if (e == null) return false;
-        if ((Objects.equals(e.name, name)) && (e.department == department)) return true;
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        Employee employee = (Employee) o;
+        return (Objects.equals(employee.name, name)) && (employee.department == department);
     }
 
     @Override
