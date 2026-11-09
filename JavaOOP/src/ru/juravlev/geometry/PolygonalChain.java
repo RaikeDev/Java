@@ -2,12 +2,19 @@ package ru.juravlev.geometry;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+import java.util.Iterator;
 
-public class PolygonalChain extends Polyline {
+public class PolygonalChain extends Polyline implements Iterable<Point2D> {
     public PolygonalChain(Point2D... point2DS) {
         super(point2DS);
         closeLine();
     }
+//    public PolygonalChain(List<Point2D> point2DS){
+//        super(point2DS);
+//        closeLine();
+//    }
 
     @Override
     public void setPoints(List<Point2D> newPoint2DS) {
@@ -51,4 +58,42 @@ public class PolygonalChain extends Polyline {
         result += "]";
         return result;
     }
+
+
+    @Override
+    public Iterator<Point2D> iterator() {
+        return null;
+    }
+
+    @Override
+    public void forEach(Consumer<? super Point2D> action) {
+        Iterable.super.forEach(action);
+    }
+
+    @Override
+    public Spliterator<Point2D> spliterator() {
+        return Iterable.super.spliterator();
+    }
 }
+
+@Override
+public Iterator<Point2D> iterator(){
+    return new Iterator<Point2D>(){
+        int lastRet;
+        @Override
+        public boolean hasNext(){
+            return true;
+        }
+        @Override
+        public Point2D next(){
+            List<Point2D> list = getPoints();
+            if (lastRet == list.size()){
+                lastRet = 0;
+            }
+            return list.get(lastRet++);
+        }
+    }
+}
+
+
+

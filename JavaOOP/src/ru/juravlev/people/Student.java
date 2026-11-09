@@ -2,8 +2,9 @@ package ru.juravlev.people;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class Student implements Cloneable {
+public class Student implements Cloneable, Comparab {
     private String name;
     private List<Integer> grades;
     private final Checker checker;
@@ -98,5 +99,19 @@ public class Student implements Cloneable {
     @Override
     public String toString() {
         return name + ": " + grades;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Student student = (Student) object;
+        return Objects.equals(name, student.name) &&
+                Double.compare(getAvgGrade(), student.getAvgGrade()) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, getAvgGrade());
     }
 }

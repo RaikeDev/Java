@@ -1,22 +1,29 @@
 package ru.juravlev.geometry;
 
+import java.awt.*;
 import java.util.Objects;
 
 import static java.lang.Math.sqrt;
 
 
-public class Line implements Lengthable, Cloneable {
-    private final static Point2D DEFAULT_POINT_2_D = new Point2D(0, 0);
-    private Point2D start;
-    private Point2D end;
+public class Line<T extends Point2D> implements Lengthable, Cloneable {
+//    private final static Point2D DEFAULT_POINT_2_D = new Point2D(0, 0);
+    private T start, end;
 
-    public Line(int x1, int y1, int x2, int y2) {
-        this.start = new Point2D(x1, y1);
-        this.end = new Point2D(x2, y2);
+    public Line(T p1, T p2) {
+        start = (T)p1.clone();
+        end = (T)p2.clone();
     }
 
-    public Line(Point2D start, Point2D end) {
-        this(check(start).getX(), check(start).getY(), check(end).getX(), check(end).getY());
+    public static Line<Point2D> of(int x1, int y1, int x2, int y2){
+
+    }
+
+    public static Line<Point3D> of(int x1, int y1, int z1, int x2, int y2, int z2){
+
+    }
+    private Line(int x1, int y1, int x2, int y2) {
+
     }
 
     public Line(Line line) {

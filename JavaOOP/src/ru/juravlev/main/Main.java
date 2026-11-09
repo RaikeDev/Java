@@ -57,5 +57,6 @@ public class Main {
 
 //        MainTest.task4_2_1();
         System.out.println(MainTest.task4_2_2("1213", "1", "213"));
+        MainTest.task6_1_2();
     }
 }

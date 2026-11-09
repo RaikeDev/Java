@@ -1,7 +1,10 @@
 package ru.juravlev.main;
 
 import ru.juravlev.animal.*;
+import ru.juravlev.exceptions.ClosedResourceException;
 import ru.juravlev.exceptions.Connection;
+import ru.juravlev.exceptions.ExampleConnector;
+import ru.juravlev.exceptions.NetworkErrorException;
 import ru.juravlev.geometry.*;
 import ru.juravlev.math.*;
 import ru.juravlev.people.*;
@@ -428,23 +431,6 @@ public class MainTest {
         s.setGrades(copy);
     }
 
-//    public static void test3(int x, Student... students) {
-//        List<List<Student>> copy = new ArrayList<>();
-//        for (Student s : students) {
-//            copy.add(s.getGrades());
-//        }
-//
-//        try {
-//            for (Student s : students) {
-//                s.addGrade(x);
-//            }
-//        } catch (IllegalGradeException e) {
-//            for (int i = 0; i < copy.size(); i++) {
-//                students[i].setGrades(copy.get(i));
-//            }
-//        }
-//
-//    }
 
     public static void task4_2_1() {
         Connection con = new Connection("ermakov.edu");
@@ -479,7 +465,64 @@ public class MainTest {
         return result;
     }
 
-    public static void task4_2_3(List<Student> students) {
-        students.forEach(s -> s.addGrade((int) (Math.random() * 10) + 1));
+//    public static void task4_2_3(List<Student> students) {
+//        students.forEach(s -> s.addGrade((int) (Math.random() * 10) + 1));
+//
+//
+//    }
+
+//    public static void task4_2_3(int x, Student... students) {
+//        List<List<Student>> copy = new ArrayList<>();
+//        for (Student s : students) {
+//            copy.add(s.getGrades());
+//        }
+//
+//        try {
+//            for (Student s : students) {
+//                s.addGrade(x);
+//            }
+//        } catch (IllegalGradeException e) {
+//            for (int i = 0; i < copy.size(); i++) {
+//                students[i].setGrades(copy.get(i));
+//            }
+//        }
+//    }
+
+    public static void task4_2_4() {
+        ExampleConnector connector = new ExampleConnector();
+        Connection conn = new Connection("127.0.0.1");
+
+        try {
+            connector.makeConnect(conn);
+        } catch (NetworkErrorException | ClosedResourceException e) {
+            connector.unregister();
+        } catch (RuntimeException e) {
+
+        }
+
     }
+
+    public static void task6_1_2() {
+        Storage<Integer> s1 = new Storage<>(null);
+        System.out.println(extractNumber(s1, 0));
+
+        Storage<Integer> s2 = new Storage<>(99);
+        System.out.println(extractNumber(s2, -1));
+
+        Storage<String> s3 = new Storage<>(null);
+        System.out.println(extractString(s3, "default"));
+
+        Storage<String> s4 = new Storage<>("hello");
+        System.out.println(extractString(s4, "hello world"));
+    }
+
+    public static Integer extractNumber(Storage<Integer> storage, Integer alternative) {
+        return storage.get(alternative);
+    }
+
+    public static String extractString(Storage<String> storage, String alternative) {
+        return storage.get(alternative);
+    }
+
+
 }

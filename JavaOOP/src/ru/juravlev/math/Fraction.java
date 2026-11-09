@@ -1,8 +1,10 @@
 package ru.juravlev.math;
 
-public final class Fraction extends Number implements Summable {
-    private final int numerator;
-    private final int denominator;
+import java.util.Objects;
+
+public final class Fraction extends Number implements Summable, Cloneable {
+    private int numerator;
+    private int denominator;
 
     public Fraction(int numerator, int denominator) {
         if (denominator == 0) {
@@ -87,5 +89,26 @@ public final class Fraction extends Number implements Summable {
     @Override
     public String toString() {
         return numerator + "/" + denominator;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        Fraction fraction = (Fraction) object;
+        return numerator == fraction.numerator && denominator == fraction.denominator;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numerator, denominator);
+    }
+
+    @Override
+    public Fraction clone() {
+        try {
+            return (Fraction) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

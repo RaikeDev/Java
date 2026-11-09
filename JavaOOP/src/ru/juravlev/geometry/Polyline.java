@@ -22,7 +22,6 @@ public class Polyline implements Lengthable, Polyable, Cloneable {
 
     public Polyline(Polyline polyline) {
         checkPoints(polyline.getPoints());
-//        if (polygonalLine == null) point2DS = new ArrayList<>();
         point2DS = polyline.getPoints();
     }
 

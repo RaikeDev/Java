@@ -2,6 +2,7 @@ package ru.juravlev.city;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class City {
     private String name;
@@ -99,6 +100,7 @@ public class City {
         }
     }
 
+    @Override
     public String toString() {
         if (name == null) {
             return "Город неизвестен";
@@ -113,4 +115,31 @@ public class City {
         return result;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof City)) return false;
+        City city = (City) object;
+        if (this.ways.size() != city.ways.size()) return false;
+        for (Way way : this.ways) {
+            boolean found = false;
+            for (Way otherWay : city.ways) {
+                if (way.getCityTo() == otherWay.getCityTo()) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        for (Way way : ways) {
+            hash += System.identityHashCode(way.getCityTo());
+        }
+        return hash;
+    }
 }
