@@ -502,27 +502,28 @@ public class MainTest {
 
     }
 
-    public static void task6_1_2() {
-        Storage<Integer> s1 = new Storage<>(null);
-        System.out.println(extractNumber(s1, 0));
+//    public static void task6_1_2() {
+//        ru.juravlev.other.Storage<Integer> s1 = new ru.juravlev.other.Storage<>(null);
+//        System.out.println(extractNumber(s1, 0));
+//
+//        ru.juravlev.other.Storage<Integer> s2 = new ru.juravlev.other.Storage<>(99);
+//        System.out.println(extractNumber(s2, -1));
+//
+//        ru.juravlev.other.Storage<String> s3 = new ru.juravlev.other.Storage<>(null);
+//        System.out.println(extractString(s3, "default"));
+//
+//        ru.juravlev.other.Storage<String> s4 = new ru.juravlev.other.Storage<>("hello");
+//        System.out.println(extractString(s4, "hello world"));
+//    }
+//
+//    public static Integer extractNumber(ru.juravlev.other.Storage<Integer> storage, Integer alternative) {
+//        return storage.get(alternative);
+//    }
+//
+//    public static String extractString(ru.juravlev.other.Storage<String> storage, String alternative) {
+//        return storage.get(alternative);
+//    }
 
-        Storage<Integer> s2 = new Storage<>(99);
-        System.out.println(extractNumber(s2, -1));
 
-        Storage<String> s3 = new Storage<>(null);
-        System.out.println(extractString(s3, "default"));
-
-        Storage<String> s4 = new Storage<>("hello");
-        System.out.println(extractString(s4, "hello world"));
-    }
-
-    public static Integer extractNumber(Storage<Integer> storage, Integer alternative) {
-        return storage.get(alternative);
-    }
-
-    public static String extractString(Storage<String> storage, String alternative) {
-        return storage.get(alternative);
-    }
-
-
+    public static void task6_1_3()
 }

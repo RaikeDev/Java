@@ -1,3 +1,5 @@
+package ru.juravlev.other;
+
 public final class Storage<T> {
     private final T object;
 

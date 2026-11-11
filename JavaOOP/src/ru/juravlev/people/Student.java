@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Student implements Cloneable, Comparab {
+public class Student implements Cloneable, Comparable {
     private String name;
     private List<Integer> grades;
     private final Checker checker;
@@ -113,5 +113,14 @@ public class Student implements Cloneable, Comparab {
     @Override
     public int hashCode() {
         return Objects.hash(name, getAvgGrade());
+    }
+
+    @Override
+    public int compare(Object o) {
+        Student compStudent = (Student) o;
+        if (getAvgGrade() > compStudent.getAvgGrade()) return 1;
+        else if (getAvgGrade() == compStudent.getAvgGrade()) return 0;
+        if (getAvgGrade() < compStudent.getAvgGrade()) return -1;
+        return -2;
     }
 }

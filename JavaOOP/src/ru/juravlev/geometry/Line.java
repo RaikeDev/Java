@@ -6,66 +6,85 @@ import java.util.Objects;
 import static java.lang.Math.sqrt;
 
 
-public class Line<T extends Point2D> implements Lengthable, Cloneable {
-//    private final static Point2D DEFAULT_POINT_2_D = new Point2D(0, 0);
+public class Line<T extends Point> implements Lengthable, Cloneable {
+    private final static Point DEFAULT_POINT = new Point(0, 0);
     private T start, end;
 
     public Line(T p1, T p2) {
-        start = (T)p1.clone();
-        end = (T)p2.clone();
+        try {
+            start = (T) p1.clone();
+            end = (T) p2.clone();
+        } catch (ClassCastException e) {
+            throw new IllegalArgumentException(
+                    "Не удалось скопировать точки линии", e
+            );
+        }
+
     }
 
-    public static Line<Point2D> of(int x1, int y1, int x2, int y2){
-
+    public static Line<Point> of(int x1, int y1, int x2, int y2) {
+        return new Line<>(x1, y1, x2, y2);
     }
 
-    public static Line<Point3D> of(int x1, int y1, int z1, int x2, int y2, int z2){
-
+    public static Line<Point3D> of(int x1, int y1, int z1, int x2, int y2, int z2) {
+        return new Line<>(new Point3D(x1, y1, z1), new Point3D(x2, y2, z2));
     }
+
     private Line(int x1, int y1, int x2, int y2) {
-
+        this((T) new Point(x1, y1), (T) new Point(x2, y2));
     }
 
-    public Line(Line line) {
+    public Line(Line<T> line) {
         this(line.start, line.end);
     }
 
-    private static Point2D check(Point2D point2D) {
-        if (point2D == null) {
-            return DEFAULT_POINT_2_D;
-        } else return point2D;
+    private Point check(Point point) {
+        if (point == null) {
+            return DEFAULT_POINT;
+        } else return point;
     }
 
-    public Point2D getStart() {
+
+
+    public void setStart(int x, int y) {
+        start.setX(x);
+        start.setY(y);
+    }
+
+    public void setStart(T start){
+        this.start = start;
+    }
+
+    public Point getStart() {
         return start;
     }
 
-    public void setStart(Point2D start) {
-        this.setStart(check(start).getX(), check(start).getY());
+    public void setEnd(int x, int y) {
+        end.setX(x);
+        end.setY(y);
     }
 
-    public void setStart(int x, int y) {
-        this.start = new Point2D(x, y);
+    public void setEnd(T end) {
+        this.end = end;
     }
 
-    public Point2D getEnd() {
+    public Point getEnd() {
         return end;
     }
 
 
-    public void setEnd(Point2D end) {
-        this.setEnd(check(end).getX(), check(end).getY());
-    }
-
-    public void setEnd(int x, int y) {
-        this.end = new Point2D(x, y);
-    }
 
 
-    public double length() {
-        double kat1 = (this.getEnd().getX() - this.getStart().getX()) * (this.getEnd().getX() - this.getStart().getX());
-        double kat2 = (this.getEnd().getY() - this.getStart().getY()) * (this.getEnd().getY() - this.getStart().getY());
-        return (sqrt(kat1 + kat2));
+
+    public double length(){
+        int[] a = start.getPoints();
+        int[] b = end.getPoints();
+        double sum = 0;
+        for (int i = 0; i < a.length; i++) {
+            sum += (a[i] - b[i]) * (a[i] - b[i]);
+        }
+
+        return Math.sqrt(sum);
     }
 
 
@@ -83,14 +102,14 @@ public class Line<T extends Point2D> implements Lengthable, Cloneable {
         return start.hashCode() + end.hashCode();
     }
 
-    @Override
-    public Line clone(){
+    public Line<T> clone(){
         try{
-            Line line = (Line) super.clone();
-            line.start = this.start.clone();
-            line.end = this.end.clone();
-            return line;
-        } catch (CloneNotSupportedException e) {
+            Line<T> l = (Line<T>)super.clone();
+            l.start =(T) start.clone();
+            l.end = (T) end.clone();
+            return l;
+        }
+        catch(CloneNotSupportedException e){
             throw new RuntimeException(e);
         }
     }

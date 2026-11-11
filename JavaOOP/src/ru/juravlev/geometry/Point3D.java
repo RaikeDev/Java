@@ -1,12 +1,22 @@
 package ru.juravlev.geometry;
 
-public final class Point3D extends PointAbstract {
+import java.util.Arrays;
+
+public final class Point3D extends Point {
+
     public Point3D(int x, int y, int z) {
-        super(x, y, z);
+        super(x, y);
+        coords = new int[]{x, y, z};
     }
 
-    public Point3D(PointAbstract anyPoint) {
-        super(anyPoint, 3);
+    public Point3D(Point point, int z) {
+        super(point.getX(), point.getY());
+        this.coords = new int[]{point.getCoordinate(0), point.getCoordinate(1), z};
+    }
+
+    public Point3D(Point point) {
+        super(point);
+        coords = Arrays.copyOf(point.getPoints(), 3);
     }
 
     public int getZ() {
@@ -15,15 +25,5 @@ public final class Point3D extends PointAbstract {
 
     public void setZ(int z) {
         setCoordinate(2, z);
-    }
-
-    @Override
-    public boolean equals(Object o){
-        return super.equals(o);
-    }
-
-    @Override
-    public int hashCode(){
-        return super.hashCode();
     }
 }

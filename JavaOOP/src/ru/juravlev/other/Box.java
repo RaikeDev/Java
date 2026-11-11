@@ -1,4 +1,4 @@
-import java.util.Objects;
+package ru.juravlev.other;
 
 public class Box<T> {
     private T object;
