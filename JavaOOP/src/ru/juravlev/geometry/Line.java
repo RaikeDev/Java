@@ -8,12 +8,19 @@ import static java.lang.Math.sqrt;
 
 public class Line<T extends Point> implements Lengthable, Cloneable {
     private final static Point DEFAULT_POINT = new Point(0, 0);
-    private T start, end;
+    private Point start, end;
 
-    public Line(T p1, T p2) {
+    public Line(T start, T end) {
         try {
-            start = (T) p1.clone();
-            end = (T) p2.clone();
+            if (start.getClass() != end.getClass()) {
+                if (start.getClass() != Point.class) {
+                    this.start = new Point3D(start.getX(), start.getY(), 0);
+                } else {
+                    this.end = new Point3D(end.getX(), end.getY(), 0);
+                }
+            }
+            if (this.start == null) this.start = start.clone();
+            if (this.end == null) this.end = (T) end.clone();
         } catch (ClassCastException e) {
             throw new IllegalArgumentException(
                     "Не удалось скопировать точки линии", e
@@ -30,12 +37,12 @@ public class Line<T extends Point> implements Lengthable, Cloneable {
         return new Line<>(new Point3D(x1, y1, z1), new Point3D(x2, y2, z2));
     }
 
-    private Line(int x1, int y1, int x2, int y2) {
-        this((T) new Point(x1, y1), (T) new Point(x2, y2));
-    }
-
     public Line(Line<T> line) {
         this(line.start, line.end);
+    }
+
+    private Line(int x1, int y1, int x2, int y2) {
+        this((T) new Point(x1, y1), (T) new Point(x2, y2));
     }
 
     private Point check(Point point) {
@@ -45,13 +52,13 @@ public class Line<T extends Point> implements Lengthable, Cloneable {
     }
 
 
-
     public void setStart(int x, int y) {
         start.setX(x);
         start.setY(y);
     }
 
-    public void setStart(T start){
+    public void setStart(T start) {
+        if (start.getClass() != end.getClass()) throw new ClassCastException();
         this.start = start;
     }
 
@@ -73,10 +80,7 @@ public class Line<T extends Point> implements Lengthable, Cloneable {
     }
 
 
-
-
-
-    public double length(){
+    public double length() {
         int[] a = start.getPoints();
         int[] b = end.getPoints();
         double sum = 0;
@@ -102,14 +106,13 @@ public class Line<T extends Point> implements Lengthable, Cloneable {
         return start.hashCode() + end.hashCode();
     }
 
-    public Line<T> clone(){
-        try{
-            Line<T> l = (Line<T>)super.clone();
-            l.start =(T) start.clone();
+    public Line<T> clone() {
+        try {
+            Line<T> l = (Line<T>) super.clone();
+            l.start = (T) start.clone();
             l.end = (T) end.clone();
             return l;
-        }
-        catch(CloneNotSupportedException e){
+        } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
     }
