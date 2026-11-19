@@ -7,6 +7,7 @@ import ru.juravlev.exceptions.ExampleConnector;
 import ru.juravlev.exceptions.NetworkErrorException;
 import ru.juravlev.geometry.*;
 import ru.juravlev.math.*;
+import ru.juravlev.other.Box;
 import ru.juravlev.people.*;
 import ru.juravlev.weapon.AssaultRifle;
 import ru.juravlev.weapon.Gun;
@@ -20,19 +21,19 @@ import java.math.BigInteger;
 
 public class MainTest {
     public static void task1_4_1() {
-        Point point2D1 = new Point(3, 5);
-        Point point2D2 = new Point(25, 6);
-        Point point2D3 = new Point(7, 8);
-        System.out.println(point2D1);
-        System.out.println(point2D2);
-        System.out.println(point2D3);
+        Point Point1 = new Point(3, 5);
+        Point Point2 = new Point(25, 6);
+        Point Point3 = new Point(7, 8);
+        System.out.println(Point1);
+        System.out.println(Point2);
+        System.out.println(Point3);
     }
 
     public static void task1_4_2() {
-        Point point2D1 = new Point(1, 3);
-        Point point2D2 = new Point(23, 8);
-        Line firstLine = new Line(point2D1, point2D2);
-        Line secondLine = new Line(5, 10, 25, 10);
+        Point Point1 = new Point(1, 3);
+        Point Point2 = new Point(23, 8);
+        Line firstLine = new Line(Point1, Point2);
+        Line secondLine = Line.of(5, 10, 25, 10);
         Line connectLine = new Line(firstLine.getStart(), secondLine.getEnd());
         System.out.println(firstLine);
         System.out.println(secondLine);
@@ -40,10 +41,10 @@ public class MainTest {
     }
 
     public static void task1_4_3() {
-        Point point2D1 = new Point(3, 5);
-        Point point2D2 = new Point(25, 6);
-        Point point2D3 = new Point(7, 8);
-        Polyline pLine = new Polyline(point2D1, point2D2, point2D3);
+        Point Point1 = new Point(3, 5);
+        Point Point2 = new Point(25, 6);
+        Point Point3 = new Point(7, 8);
+        Polyline pLine = new Polyline(Point1, Point2, Point3);
         System.out.println(pLine);
     }
 
@@ -105,9 +106,9 @@ public class MainTest {
     }
 
     public static void task1_5_3() {
-        Point point2D1 = new Point(1, 1);
-        Point point2D2 = new Point(10, 15);
-        Line line = new Line(point2D1, point2D2);
+        Point Point1 = new Point(1, 1);
+        Point Point2 = new Point(10, 15);
+        Line line = new Line(Point1, Point2);
 
 
         System.out.println(line.length());
@@ -332,15 +333,15 @@ public class MainTest {
     }
 
     public static void practice() {
-        Point point2D = new Point(1, 2);
+        Point Point = new Point(1, 2);
         Point3D pointXYZ = new Point3D(1, 2, 3);
-        System.out.println(point2D);
+        System.out.println(Point);
         System.out.println(pointXYZ);
-        Point point2D1 = new Point(point2D);
-        Point point2D2 = new Point(pointXYZ);
-        System.out.println(point2D1);
-        System.out.println(point2D2);
-        Point3D point3D1 = new Point3D(point2D);
+        Point Point1 = new Point(Point);
+        Point Point2 = new Point(pointXYZ);
+        System.out.println(Point1);
+        System.out.println(Point2);
+        Point3D point3D1 = new Point3D(Point);
         Point3D point3D2 = new Point3D(pointXYZ);
         System.out.println(point3D1);
         System.out.println(point3D2);
@@ -362,7 +363,7 @@ public class MainTest {
     }
 
     public static void task2_3_5() {
-        System.out.println(LengthSummer.lengthSummer(new Line(1, 2, 2, 5), new ClosedPolyline(new Point(2, 5), new Point(5, 3))));
+        System.out.println(LengthSummer.lengthSummer(Line.of(1, 2, 2, 5), new ClosedPolyline(new Point(2, 5), new Point(5, 3))));
     }
 
     public static void task2_3_6() {
@@ -535,6 +536,14 @@ public class MainTest {
     }
 
     public static void moveX(Line<?> line) {
-        line.setStart(line.getStart().getX() + 10, line.getStart().getY());
+        Point start = line.getStart();
+        if (start.getX() < 0) {
+            start.setX(start.getX() - 10);
+
+        } else {
+            start.setX(start.getX() + 10);
+        }
     }
+
+
 }

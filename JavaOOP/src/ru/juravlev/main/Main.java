@@ -2,6 +2,7 @@ package ru.juravlev.main;
 
 //import ru.juravlev.main.MainTest;
 
+import ru.juravlev.other.Box;
 import ru.juravlev.other.Helper;
 
 import java.util.ArrayList;
@@ -72,6 +73,10 @@ public class Main {
         List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
         Helper<Integer> total = summator(list);
 
+
+        System.out.println(findMax(List.of(new Box<Integer>(5), new Box<Double>(3.0), new Box<Float>(53.9f))));
+
+
     }
 
     public static Helper<Integer> summator(List<Integer> l) {
@@ -83,21 +88,30 @@ public class Main {
         return Helper.of(sum);
     }
 
-    public static <T> List<T> func(List<T> lst, Predicate<T> predicate) {
-        List<T> result = new ArrayList<>();
-        if (lst == null || lst.isEmpty()) return result;
-        for (T item : lst) {
-            if (predicate.test(item){
-                result.add(apply(item));
-            }
-        }
-        return result;
-    } // O(1) map и
+//    public static <T> List<T> func(List<T> lst, Predicate<T> predicate) {
+//        List<T> result = new ArrayList<>();
+//        if (lst == null || lst.isEmpty()) return result;
+//        for (T item : lst) {
+//            if (predicate.test(item){
+//                result.add(apply(item));
+//            }
+//        }
+//        return result;
+//    } // O(1) map и
+//
+//    class Flow{
+//        private List<T> list;
+//        public Flow(){
+//
+//        }
+//    }
 
-    class Flow{
-        private List<T> list;
-        public Flow(){
 
+    public static double findMax(List<? extends Box<? extends Number>> boxes){
+        double max = boxes.getFirst().getObject().doubleValue();
+        for (Box<? extends Number> i: boxes){
+            if (i.getObject().doubleValue() > max) max = i.getObject().doubleValue();
         }
+        return max;
     }
 }

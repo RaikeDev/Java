@@ -7,41 +7,41 @@ import java.util.function.Consumer;
 import java.util.Iterator;
 
 public class ClosedPolyline extends Polyline implements Iterable<Point> {
-    public ClosedPolyline(Point... point2DS) {
-        super(point2DS);
+    public ClosedPolyline(Point... PointS) {
+        super(PointS);
         closeLine();
     }
 
     @Override
-    public void setPoints(List<Point> newPoint2DS) {
-        super.setPoints(newPoint2DS);
+    public void setPoints(List<Point> newPointS) {
+        super.setPoints(newPointS);
         closeLine();
     }
 
     @Override
-    public void addPoints(Point... newPoint2DS) {
-        if (newPoint2DS == null) {
+    public void addPoints(Point... newPointS) {
+        if (newPointS == null) {
             throw new NullPointerException("Points must not be null");
         }
-        List<Point> point2DS = getPoints();
-        if (isClosed(point2DS)) {
-            point2DS.removeLast();
+        List<Point> PointS = getPoints();
+        if (isClosed(PointS)) {
+            PointS.removeLast();
         }
-        point2DS.addAll(Arrays.asList(newPoint2DS));
-        setPoints(point2DS);
+        PointS.addAll(Arrays.asList(newPointS));
+        setPoints(PointS);
     }
 
 
     private void closeLine() {
-        List<Point> point2DS = getPoints();
-        if (point2DS.size() > 1 && !isClosed(point2DS)) {
-            point2DS.add(point2DS.getFirst());
-            super.setPoints(point2DS);
+        List<Point> PointS = getPoints();
+        if (PointS.size() > 1 && !isClosed(PointS)) {
+            PointS.add(PointS.getFirst());
+            super.setPoints(PointS);
         }
     }
 
-    private static boolean isClosed(List<Point> point2DS) {
-        return point2DS.size() > 1 && point2DS.getFirst() == point2DS.getLast();
+    private static boolean isClosed(List<Point> PointS) {
+        return PointS.size() > 1 && PointS.getFirst() == PointS.getLast();
     }
 
     @Override

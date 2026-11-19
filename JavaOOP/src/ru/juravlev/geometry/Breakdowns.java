@@ -8,8 +8,8 @@ public class Breakdowns extends Polyline implements Polyable {
         super(collectPoints(polyables));
     }
 
-    private static ArrayList<Point2D> collectPoints(Polyable... polyables) {
-        ArrayList<Point2D> points = new ArrayList<>();
+    private static ArrayList<Point> collectPoints(Polyable... polyables) {
+        ArrayList<Point> points = new ArrayList<>();
         for (Polyable p : polyables) {
             if (p == null) continue;
             Polyline line = p.getPolyline();

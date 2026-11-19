@@ -38,7 +38,7 @@ public class Line<T extends Point> implements Lengthable, Cloneable {
     }
 
     public Line(Line<T> line) {
-        this(line.start, line.end);
+        this((T) line.start, (T) line.end);
     }
 
     private Line(int x1, int y1, int x2, int y2) {
