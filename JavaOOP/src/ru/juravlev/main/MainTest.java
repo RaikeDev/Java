@@ -20,17 +20,17 @@ import java.math.BigInteger;
 
 public class MainTest {
     public static void task1_4_1() {
-        Point2D point2D1 = new Point2D(3, 5);
-        Point2D point2D2 = new Point2D(25, 6);
-        Point2D point2D3 = new Point2D(7, 8);
+        Point point2D1 = new Point(3, 5);
+        Point point2D2 = new Point(25, 6);
+        Point point2D3 = new Point(7, 8);
         System.out.println(point2D1);
         System.out.println(point2D2);
         System.out.println(point2D3);
     }
 
     public static void task1_4_2() {
-        Point2D point2D1 = new Point2D(1, 3);
-        Point2D point2D2 = new Point2D(23, 8);
+        Point point2D1 = new Point(1, 3);
+        Point point2D2 = new Point(23, 8);
         Line firstLine = new Line(point2D1, point2D2);
         Line secondLine = new Line(5, 10, 25, 10);
         Line connectLine = new Line(firstLine.getStart(), secondLine.getEnd());
@@ -40,9 +40,9 @@ public class MainTest {
     }
 
     public static void task1_4_3() {
-        Point2D point2D1 = new Point2D(3, 5);
-        Point2D point2D2 = new Point2D(25, 6);
-        Point2D point2D3 = new Point2D(7, 8);
+        Point point2D1 = new Point(3, 5);
+        Point point2D2 = new Point(25, 6);
+        Point point2D3 = new Point(7, 8);
         Polyline pLine = new Polyline(point2D1, point2D2, point2D3);
         System.out.println(pLine);
     }
@@ -105,8 +105,8 @@ public class MainTest {
     }
 
     public static void task1_5_3() {
-        Point2D point2D1 = new Point2D(1, 1);
-        Point2D point2D2 = new Point2D(10, 15);
+        Point point2D1 = new Point(1, 1);
+        Point point2D2 = new Point(10, 15);
         Line line = new Line(point2D1, point2D2);
 
 
@@ -146,12 +146,12 @@ public class MainTest {
     public static void task1_5_7() {
         Polyline line = new Polyline();
 
-        line.addPoints(new Point2D(1, 5), new Point2D(2, 8), new Point2D(5, 3));
+        line.addPoints(new Point(1, 5), new Point(2, 8), new Point(5, 3));
 
         System.out.println(line);
         System.out.println("Длина: " + line.length());
 
-        line.addPoints(new Point2D(5, 15), new Point2D(8, 10));
+        line.addPoints(new Point(5, 15), new Point(8, 10));
 
         System.out.println(line);
         System.out.println("Длина: " + line.length());
@@ -165,8 +165,8 @@ public class MainTest {
         System.out.println(line);
         System.out.println("Длина: " + line.length());
 
-        List<Point2D> pts = line.getPoints();
-        pts.set(pts.size() - 1, new Point2D(15, 25));
+        List<Point> pts = line.getPoints();
+        pts.set(pts.size() - 1, new Point(15, 25));
         line.setPoints(pts);
 
         System.out.println(line);
@@ -213,8 +213,8 @@ public class MainTest {
     }
 
     public static void task1_6_6() {
-        Point2D p1 = new Point2D(4, 4);
-        Point2D p2 = new Point2D(46, 49);
+        Point p1 = new Point(4, 4);
+        Point p2 = new Point(46, 49);
         Line l1 = new Line(p1, p2);
         Line l2 = new Line(p2, p1);
         l1.setStart(5, 7);
@@ -267,7 +267,7 @@ public class MainTest {
 
 
     public static void task2_1_2() {
-        PolygonalChain cl = new PolygonalChain(new Point2D(1, 4), new Point2D(4, 2), new Point2D(46, 2), new Point2D(1, 1));
+        ClosedPolyline cl = new ClosedPolyline(new Point(1, 4), new Point(4, 2), new Point(46, 2), new Point(1, 1));
         System.out.println(cl);
     }
 
@@ -332,12 +332,12 @@ public class MainTest {
     }
 
     public static void practice() {
-        Point2D point2D = new Point2D(1, 2);
+        Point point2D = new Point(1, 2);
         Point3D pointXYZ = new Point3D(1, 2, 3);
         System.out.println(point2D);
         System.out.println(pointXYZ);
-        Point2D point2D1 = new Point2D(point2D);
-        Point2D point2D2 = new Point2D(pointXYZ);
+        Point point2D1 = new Point(point2D);
+        Point point2D2 = new Point(pointXYZ);
         System.out.println(point2D1);
         System.out.println(point2D2);
         Point3D point3D1 = new Point3D(point2D);
@@ -362,15 +362,15 @@ public class MainTest {
     }
 
     public static void task2_3_5() {
-        System.out.println(LengthSummer.lengthSummer(new Line(1, 2, 2, 5), new PolygonalChain(new Point2D(2, 5), new Point2D(5, 3))));
+        System.out.println(LengthSummer.lengthSummer(new Line(1, 2, 2, 5), new ClosedPolyline(new Point(2, 5), new Point(5, 3))));
     }
 
     public static void task2_3_6() {
-        System.out.println(new Square(new Point2D(1, 3), 2).getPolyline());
+        System.out.println(new Square(new Point(1, 3), 2).getPolyline());
     }
 
     public static void task2_3_7() {
-        System.out.println(new Breakdowns(new Square(1, 1, 12), new Polyline(new Point2D(1, 2), new Point2D(2, 3))));
+        System.out.println(new Breakdowns(new Square(1, 1, 12), new Polyline(new Point(1, 2), new Point(2, 3))));
     }
 
     public static void task2_3_8() {
@@ -401,7 +401,7 @@ public class MainTest {
     }
 
     public static void task3_1_5() {
-        ru.juravlev.geometry.Point2D point1 = new Point2D(1, 2);
+        ru.juravlev.geometry.Point point1 = new Point(1, 2);
         java.awt.Point point2 = new java.awt.Point(4, 3);
         System.out.println(point1);
         System.out.println(point2);
@@ -502,7 +502,7 @@ public class MainTest {
 
     }
 
-//    public static void task6_1_2() {
+    //    public static void task6_1_2() {
 //        ru.juravlev.other.Storage<Integer> s1 = new ru.juravlev.other.Storage<>(null);
 //        System.out.println(extractNumber(s1, 0));
 //
@@ -516,14 +516,25 @@ public class MainTest {
 //        System.out.println(extractString(s4, "hello world"));
 //    }
 //
-//    public static Integer extractNumber(ru.juravlev.other.Storage<Integer> storage, Integer alternative) {
-//        return storage.get(alternative);
-//    }
-//
-//    public static String extractString(ru.juravlev.other.Storage<String> storage, String alternative) {
-//        return storage.get(alternative);
-//    }
+    public static Integer extractNumber(ru.juravlev.other.Storage<Integer> storage, Integer alternative) {
+        return storage.get(alternative);
+    }
+
+    public static String extractString(ru.juravlev.other.Storage<String> storage, String alternative) {
+        return storage.get(alternative);
+    }
 
 
-    public static void task6_1_3()
+//    public static void task6_1_3()
+
+    public static void task6_2_1() {
+        Line<Point> l = new Line<>(new Point(2, 4), new Point(2, 1));
+        System.out.println(l);
+        moveX(l);
+        System.out.println(l);
+    }
+
+    public static void moveX(Line<?> line) {
+        line.setStart(line.getStart().getX() + 10, line.getStart().getY());
+    }
 }

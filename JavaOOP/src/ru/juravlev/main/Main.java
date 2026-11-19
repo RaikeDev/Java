@@ -2,6 +2,14 @@ package ru.juravlev.main;
 
 //import ru.juravlev.main.MainTest;
 
+import ru.juravlev.other.Helper;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 public class Main {
     public static void main(String[] args) {
 //        ru.juravlev.main.MainTest.task1_4_1();
@@ -56,7 +64,40 @@ public class Main {
 //        MainTest.task3_1_5();
 
 //        MainTest.task4_2_1();
-        System.out.println(MainTest.task4_2_2("1213", "1", "213"));
-        MainTest.task6_1_2();
+//        System.out.println(MainTest.task4_2_2("1213", "1", "213"));
+
+
+        MainTest.task6_2_1();
+
+        List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
+        Helper<Integer> total = summator(list);
+
+    }
+
+    public static Helper<Integer> summator(List<Integer> l) {
+        if (l == null || l.isEmpty()) return Helper.empty();
+        int sum = 0;
+        for (int i : l) {
+            sum += i;
+        }
+        return Helper.of(sum);
+    }
+
+    public static <T> List<T> func(List<T> lst, Predicate<T> predicate) {
+        List<T> result = new ArrayList<>();
+        if (lst == null || lst.isEmpty()) return result;
+        for (T item : lst) {
+            if (predicate.test(item){
+                result.add(apply(item));
+            }
+        }
+        return result;
+    } // O(1) map и
+
+    class Flow{
+        private List<T> list;
+        public Flow(){
+
+        }
     }
 }

@@ -36,13 +36,13 @@ public class Square implements Polyable {
     }
 
 
-    public PolygonalChain getPolyline() {
+    public ClosedPolyline getPolyline() {
         Point2D[] point2DS = new Point2D[4];
         point2DS[0] = topLeft;
         point2DS[1] = new Point2D(topLeft.getX() + sideLength, topLeft.getY());
         point2DS[2] = new Point2D(topLeft.getX() + sideLength, topLeft.getY() - sideLength);
         point2DS[3] = new Point2D(topLeft.getX(), topLeft.getY() - sideLength);
-        return new PolygonalChain(point2DS);
+        return new ClosedPolyline(point2DS);
     }
 
     @Override
