@@ -2,8 +2,11 @@ package ru.juravlev.main;
 
 //import ru.juravlev.main.MainTest;
 
+import ru.juravlev.geometry.Point;
+import ru.juravlev.geometry.Point3D;
 import ru.juravlev.other.Box;
 import ru.juravlev.other.Helper;
+import ru.juravlev.other.Section6_2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,14 +72,17 @@ public class Main {
 
 
         MainTest.task6_2_1();
+        MainTest.task6_2_2();
+        MainTest.task6_2_3();
+        MainTest.task6_2_4();
+
+        MainTest.task6_3_1();
+        MainTest.task6_3_2();
+        MainTest.task6_3_3();
+        MainTest.task6_3_4();
 
         List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
         Helper<Integer> total = summator(list);
-
-
-        System.out.println(findMax(List.of(new Box<Integer>(5), new Box<Double>(3.0), new Box<Float>(53.9f))));
-
-
     }
 
     public static Helper<Integer> summator(List<Integer> l) {
@@ -107,11 +113,4 @@ public class Main {
 //    }
 
 
-    public static double findMax(List<? extends Box<? extends Number>> boxes){
-        double max = boxes.getFirst().getObject().doubleValue();
-        for (Box<? extends Number> i: boxes){
-            if (i.getObject().doubleValue() > max) max = i.getObject().doubleValue();
-        }
-        return max;
-    }
 }

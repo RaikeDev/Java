@@ -7,7 +7,7 @@ import ru.juravlev.exceptions.ExampleConnector;
 import ru.juravlev.exceptions.NetworkErrorException;
 import ru.juravlev.geometry.*;
 import ru.juravlev.math.*;
-import ru.juravlev.other.Box;
+import ru.juravlev.other.*;
 import ru.juravlev.people.*;
 import ru.juravlev.weapon.AssaultRifle;
 import ru.juravlev.weapon.Gun;
@@ -16,7 +16,10 @@ import ru.juravlev.work.Department;
 import ru.juravlev.city.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.math.BigInteger;
 
 public class MainTest {
@@ -531,19 +534,195 @@ public class MainTest {
     public static void task6_2_1() {
         Line<Point> l = new Line<>(new Point(2, 4), new Point(2, 1));
         System.out.println(l);
-        moveX(l);
+        Section6_2.moveX(l);
         System.out.println(l);
     }
 
-    public static void moveX(Line<?> line) {
-        Point start = line.getStart();
-        if (start.getX() < 0) {
-            start.setX(start.getX() - 10);
-
-        } else {
-            start.setX(start.getX() + 10);
-        }
+    public static void task6_2_2() {
+        System.out.println(Section6_2.findMax(List.of(new Box<Integer>(5), new Box<Double>(3.0), new Box<Float>(53.9f))));
     }
 
+    public static void task6_2_3() {
+        Box<Point> pointBox = new Box<>();
+        Section6_2.putPointToBox(pointBox);
+        System.out.println(pointBox.getObject());
+        Box<Point3D> point3DBox = new Box<>();
+        Section6_2.putPointToBox(point3DBox);
+        System.out.println(point3DBox.getObject());
+    }
+
+    public static void task6_2_4() {
+        List<Integer> arr = new ArrayList<>();
+        Section6_2.fillingArrayList(arr);
+        System.out.println(arr);
+    }
+
+    public static void task6_3_1() {
+        List<String> stringArr = new ArrayList<>(List.of("qwerty", "asdfg", "zx"));
+        Applyable<String, Integer> lengthForAnyEl = new Applyable<String, Integer>() {
+            @Override
+            public Integer apply(String value) {
+                return value.length();
+            }
+        };
+        List<Integer> res1 = Section6_3.applyToAnyEl(stringArr, lengthForAnyEl);
+        System.out.println(stringArr);
+        System.out.println(res1);
+
+
+        List<Integer> intArr = new ArrayList<>(List.of(1, -3, 7));
+        Applyable<Integer, Integer> anyElToPositive = new Applyable<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer value) {
+                if (value < 0) {
+                    return -value;
+                }
+                return value;
+            }
+        };
+        List<Integer> res2 = Section6_3.applyToAnyEl(intArr, anyElToPositive);
+        System.out.println(intArr);
+        System.out.println(res2);
+
+
+        List<int[]> arrays = List.of(new int[]{3, 12}, new int[]{1, 23, 322});
+
+        Applyable<int[], Integer> maxInArray = new Applyable<>() {
+            @Override
+            public Integer apply(int[] values) {
+                if (values == null || values.length == 0) {
+                    throw new IllegalArgumentException();
+                }
+
+                int max = values[0];
+                for (int value : values) {
+                    if (value > max) {
+                        max = value;
+                    }
+                }
+                return max;
+            }
+        };
+
+        List<Integer> res3 = Section6_3.applyToAnyEl(arrays, maxInArray);
+        System.out.println(res3);
+    }
+
+    public static void task6_3_2() {
+        List<String> stringArr = new ArrayList<>(List.of("qwerty", "asdfg", "zx"));
+
+        Testable<String> stringMoreThen3 = new Testable<String>() {
+            @Override
+            public boolean test(String text) {
+                if (text.length() < 3)
+                    return false;
+                return true;
+            }
+        };
+
+        List<String> res3 = Section6_3.filter(stringArr, stringMoreThen3);
+        System.out.println(res3);
+
+
+        List<Integer> intArray = new ArrayList<>(List.of(1, -3, 7));
+        Testable<Integer> onlyPos = new Testable<Integer>() {
+            @Override
+            public boolean test(Integer value) {
+                if (value < 0) return false;
+                else return true;
+            }
+        };
+        System.out.println(Section6_3.filter(intArray, onlyPos));
+
+
+        List<int[]> arrOfArr = new ArrayList<>(List.of(new int[]{2, 3, 2}, new int[]{4, 3, -1}, new int[]{-2, -43}));
+        Testable<int[]> onlyNeg = new Testable<int[]>() {
+            @Override
+            public boolean test(int[] obj) {
+                for (int i : obj) {
+                    if (i > 0) return false;
+                }
+                return true;
+            }
+        };
+        System.out.println(Arrays.deepToString(Section6_3.filter(arrOfArr, onlyNeg).toArray()));
+    }
+
+    public static void task6_3_3() {
+        List<Integer> lst = new ArrayList<>(List.of(1, -3, 7));
+
+        Summarisable<Integer> s = new Summarisable<Integer>() {
+            @Override
+            public Integer toT(List<Integer> list) {
+                int sum = 0;
+                for (int i : list) {
+                    sum += i;
+                }
+                ;
+                return sum;
+            }
+        };
+
+        System.out.println(Section6_3.toT(lst, s).getResOrDefault(0));
+    }
+
+    public static void task6_3_4() {
+        List<Integer> lst = new ArrayList<>(List.of(1, -3, 7));
+
+        Accum<List<List<Integer>>, Integer> accum = new Accum<List<List<Integer>>, Integer>() {
+            @Override
+            public void acc(List<List<Integer>> result, Integer value) {
+                if (value > 0) result.get(0).add(value);
+                if (value < 0) result.get(1).add(value);
+            }
+        };
+
+        MethodToCreate<List<List<Integer>>> methodToCreate = new MethodToCreate<List<List<Integer>>>() {
+            @Override
+            public List<List<Integer>> create() {
+                return List.of(new ArrayList<>(), new ArrayList<>());
+            }
+        };
+
+        System.out.println(Section6_3.collect(lst, methodToCreate, accum));
+
+        List<String> words = List.of("qwerty", "asdfg", "zx", "qw");
+        MethodToCreate<List<List<String>>> createWordGroups = new MethodToCreate<List<List<String>>>() {
+            @Override
+            public List<List<String>> create() {
+                return new ArrayList<>();
+            }
+        };
+        Accum<List<List<String>>, String> groupByLength = new Accum<List<List<String>>, String>() {
+            @Override
+            public void acc(List<List<String>> result, String value) {
+                for (List<String> group : result) {
+                    if (group.getFirst().length() == value.length()) {
+                        group.add(value);
+                        return;
+                    }
+                }
+                List<String> group = new ArrayList<>();
+                group.add(value);
+                result.add(group);
+            }
+        };
+        System.out.println(Section6_3.collect(words, createWordGroups, groupByLength));
+
+        List<String> wordsWithDuplicates = List.of("qwerty", "asdfg", "qwerty", "qw");
+        MethodToCreate<Set<String>> createWordSet = new MethodToCreate<Set<String>>() {
+            @Override
+            public Set<String> create() {
+                return new LinkedHashSet<>();
+            }
+        };
+        Accum<Set<String>, String> addToSet = new Accum<Set<String>, String>() {
+            @Override
+            public void acc(Set<String> result, String value) {
+                result.add(value);
+            }
+        };
+        System.out.println(Section6_3.collect(wordsWithDuplicates, createWordSet, addToSet));
+    }
 
 }

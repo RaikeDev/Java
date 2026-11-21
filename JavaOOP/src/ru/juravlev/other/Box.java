@@ -3,6 +3,7 @@ package ru.juravlev.other;
 public class Box<T> {
     private T object;
 
+    public Box(){}
     public Box(T object) {
         this.object = object;
     }
